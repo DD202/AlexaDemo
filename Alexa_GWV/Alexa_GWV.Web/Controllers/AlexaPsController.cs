@@ -18,24 +18,9 @@ namespace Alexa_GWV.Web.Controllers
         [HttpPost, Route("api/alexa-ps/demo")]
         public dynamic Pluralsight(AlexaRequest alexaRequest)
         {
-            //if (alexaRequest.Session.Application.ApplicationId != ApplicationId)
-            //{
-            //    throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
-            //}
-
-
-            //var totalSeconds = (DateTime.UtcNow - alexaRequest.Request.Timestamp).TotalSeconds;
-            //if (totalSeconds <= 0 || totalSeconds > 150)
-            //{
-            //    throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
-            //}
-
-
-
-
             var request = new Requests().Create(new Request
             {
-                MemberId = alexaRequest.Session.Attributes.MemberId,
+                //MemberId = alexaRequest.Session.Attributes.MemberId,
                 Timestamp = alexaRequest.Request.Timestamp,
                 Intent = (alexaRequest.Request.Intent == null) ? "" : alexaRequest.Request.Intent.Name,
                 AppId = alexaRequest.Session.Application.ApplicationId,
@@ -71,15 +56,17 @@ namespace Alexa_GWV.Web.Controllers
             }
             return response;
 
+
+
         }
 
         private AlexaResponse LaunchRequestHandler(Request request)
         {
             var response = new AlexaResponse("Welcome to Pluralsight. What would you like to hear, the Top Courses or New Courses?");
-            response.Session.MemberId = request.MemberId;
+            //response.Session.MemberId = request.MemberId;
             response.Response.Card.Title = "Pluralsight";
             response.Response.Card.Content = "";
-            response.Response.Reprompt.OutputSpeech.Text = "Please pick one, Top Courses or New Courses?";
+            //response.Response.Reprompt.OutputSpeech.Text = "Please pick one, Top Courses or New Courses?";
             response.Response.ShouldEndSession = false;
             return response;
         }
@@ -117,7 +104,13 @@ namespace Alexa_GWV.Web.Controllers
                     .ForEach(c => output.AppendFormat("{0} by {1}", c.Title, c.Author));
 
             }
-            return new AlexaResponse(output.ToString());
+
+            var response = new AlexaResponse(output.ToString());
+            response.Response.Card.Title = "Latest Courses";
+
+           
+            return response;
+
         }
 
         private AlexaResponse TopCoursesIntentHandler(Request request)
@@ -156,7 +149,10 @@ namespace Alexa_GWV.Web.Controllers
                 }
 
             }
-            return new AlexaResponse(output.ToString());
+            var response = new AlexaResponse(output.ToString());
+            response.Response.Card.Title = string.Format("Here are the top {0} {1}. ", limit, string.IsNullOrWhiteSpace(criteria) ? "courses" : criteria);
+            return response;
+
         }
 
         private AlexaResponse CancelOrStopIntentHandler(Request request)
@@ -167,7 +163,7 @@ namespace Alexa_GWV.Web.Controllers
         private AlexaResponse HelpIntentHandler(Request request)
         {
             var response = new AlexaResponse("To use the plural sight skill, you can say lots of things that i don't feel like typing", false);
-            response.Response.Reprompt.OutputSpeech.Text = "Please select one, top courses or new courses";
+            //response.Response.Reprompt.OutputSpeech.Text = "Please select one, top courses or new courses";
             return response;
         }
 

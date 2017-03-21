@@ -59,8 +59,8 @@ namespace Alexa.Entities
         [JsonObject("sessionAttributes")]
         public class SessionAttributes
         {
-            [JsonProperty("memberId")]
-            public int MemberId { get; set; }
+            //[JsonProperty("memberId")]
+            //public int MemberId { get; set; }
         }
 
         [JsonObject("response")]
@@ -75,15 +75,15 @@ namespace Alexa.Entities
             [JsonProperty("card")]
             public CardAttributes Card { get; set; }
 
-            [JsonProperty("reprompt")]
-            public RepromptAttributes Reprompt { get; set; }
+            //[JsonProperty("reprompt")]
+            //public RepromptAttributes Reprompt { get; set; }
 
             public ResponseAttributes()
             {
                 ShouldEndSession = true;
                 OutputSpeech = new OutputSpeechAttributes();
                 Card = new CardAttributes();
-                Reprompt = new RepromptAttributes();
+                //Reprompt = new RepromptAttributes();
             }
 
             [JsonObject("outputSpeech")]
@@ -95,8 +95,8 @@ namespace Alexa.Entities
                 [JsonProperty("text")]
                 public string Text { get; set; }
 
-                [JsonProperty("ssml")]
-                public string Ssml { get; set; }
+                //[JsonProperty("ssml")]
+                //public string Ssml { get; set; }
 
                 public OutputSpeechAttributes()
                 {

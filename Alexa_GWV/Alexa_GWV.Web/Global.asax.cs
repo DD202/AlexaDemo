@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
@@ -19,9 +20,13 @@ namespace Alexa_GWV.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            var configuration = new Alexa_GWV.Web.Migrations.Configuration();
-            var migrator = new DbMigrator(configuration);
-            migrator.Update();
+            if (ConfigurationManager.AppSettings.Get("RunMigrations").Equals("true",StringComparison.InvariantCultureIgnoreCase))
+            {
+                var configuration = new Alexa_GWV.Web.Migrations.Configuration();
+                var migrator = new DbMigrator(configuration);
+                migrator.Update();
+            }
+           
         }
     }
 }
