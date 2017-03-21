@@ -178,11 +178,28 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlexaPsController.cs" />
+    <Compile Include="Controllers\AlexaSimpleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataContexts\ApplicationDbContext.cs" />
+    <Compile Include="DataContexts\Requests.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703162144051_InitialCreate.cs" />
+    <Compile Include="Migrations\201703162144051_InitialCreate.Designer.cs">
+      <DependentUpon>201703162144051_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703162301218_AlexaModels.cs" />
+    <Compile Include="Migrations\201703162301218_AlexaModels.Designer.cs">
+      <DependentUpon>201703162301218_AlexaModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703211432483_PS_Entities.cs" />
+    <Compile Include="Migrations\201703211432483_PS_Entities.Designer.cs">
+      <DependentUpon>201703211432483_PS_Entities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -210,6 +227,8 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SpeechAssets\AlexaPs\SampleUtterances.txt" />
+    <Content Include="SpeechAssets\AlexaSimple\SampleUtterances.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -245,6 +264,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="SpeechAssets\AlexaSimple\IntentSchema.json" />
+    <Content Include="SpeechAssets\AlexaPs\IntentSchema.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -255,6 +276,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Alexa.Entities\Alexa.Entities.csproj">
+      <Project>{1e88f455-5010-4a65-81b4-f6da20a621e5}</Project>
+      <Name>Alexa.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703162144051_InitialCreate.resx">
+      <DependentUpon>201703162144051_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703162301218_AlexaModels.resx">
+      <DependentUpon>201703162301218_AlexaModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703211432483_PS_Entities.resx">
+      <DependentUpon>201703211432483_PS_Entities.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
