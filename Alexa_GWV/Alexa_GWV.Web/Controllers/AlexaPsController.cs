@@ -18,10 +18,10 @@ namespace Alexa_GWV.Web.Controllers
         [HttpPost, Route("api/alexa-ps/demo")]
         public dynamic Pluralsight(AlexaRequest alexaRequest)
         {
-            if (alexaRequest.Session.Application.ApplicationId != ApplicationId)
-            {
-                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
-            }
+            //if (alexaRequest.Session.Application.ApplicationId != ApplicationId)
+            //{
+            //    throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+            //}
 
             var totalSeconds = (DateTime.UtcNow - alexaRequest.Request.Timestamp).TotalSeconds;
             if (totalSeconds <= 0 || totalSeconds > 150)
