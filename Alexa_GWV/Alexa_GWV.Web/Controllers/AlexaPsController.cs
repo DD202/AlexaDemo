@@ -23,11 +23,15 @@ namespace Alexa_GWV.Web.Controllers
             //    throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
             //}
 
-            var totalSeconds = (DateTime.UtcNow - alexaRequest.Request.Timestamp).TotalSeconds;
-            if (totalSeconds <= 0 || totalSeconds > 150)
-            {
-                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
-            }
+
+            //var totalSeconds = (DateTime.UtcNow - alexaRequest.Request.Timestamp).TotalSeconds;
+            //if (totalSeconds <= 0 || totalSeconds > 150)
+            //{
+            //    throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+            //}
+
+
+
 
             var request = new Requests().Create(new Request
             {
