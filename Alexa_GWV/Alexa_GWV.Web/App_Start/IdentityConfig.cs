@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Alexa_GWV.Web.Models;
+using Alexa.Entities;
 
 namespace Alexa_GWV.Web
 {

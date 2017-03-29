@@ -26,5 +26,12 @@ namespace Alexa_GWV.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Privacy()
+        {
+            ViewBag.Message = "Privacy Policy";
+
+            return View();
+        }
     }
 }

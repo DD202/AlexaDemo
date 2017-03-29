@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace Alexa.Entities
 {
-    public class Course
+    public class InformationalFact
     {
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(50)]
-        public string Title { get; set; }
-
-        [MaxLength(50)]
-        public string Author { get; set; }
-
-        [Column(TypeName = "ntext")]
-        public string Content { get; set; }
+        [MaxLength(500)]
+        public string Fact { get; set; }
 
         public int Votes { get; set; }
-
-        public DateTime DateCreated { get; set; }
     }
 }

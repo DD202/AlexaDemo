@@ -1,20 +1,13 @@
 ﻿{
   "intents": [
     {
-      "intent": "NewCoursesIntent"
+      "intent": "RandomFactIntent"
     },
     {
-      "intent": "TopCoursesIntent",
-      "slots": [
-        {
-          "name": "Limit",
-          "type": "AMAZON.NUMBER"
-        },
-        {
-          "name": "Criteria",
-          "type": "CRITERIA"
-        }
-      ]
+      "intent": "RandomImageIntent"
+    },
+    {
+      "intent": "PersonalInfoIntent"
     },
     {
       "intent": "AMAZON.YesIntent"
@@ -31,6 +24,5 @@
     {
       "intent": "AMAZON.StopIntent"
     }
-    
   ]
 }

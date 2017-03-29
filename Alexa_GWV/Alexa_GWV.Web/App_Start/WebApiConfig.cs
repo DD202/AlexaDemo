@@ -19,6 +19,7 @@ namespace Alexa_GWV.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

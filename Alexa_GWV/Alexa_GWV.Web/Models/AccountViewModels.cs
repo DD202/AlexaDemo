@@ -60,6 +60,34 @@ namespace Alexa_GWV.Web.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+    }
+    public class AmazonLoginViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+
+        public string State { get; set; }
+
+        public string Access_Token { get; set; }
+
+        public string Token_Type { get; set; }
+
+        public string Redirect_Uri { get; set; }
+
+        public string ClientId { get; set; }
+        public string VendorId { get; set; }
+
     }
 
     public class RegisterViewModel

@@ -1,14 +1,17 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using Alexa.Entities;
+using Alexa_GWV.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Alexa_GWV.Web.Models;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Alexa_GWV.Web.Controllers
 {
@@ -59,9 +62,9 @@ namespace Alexa_GWV.Web.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -89,6 +92,83 @@ namespace Alexa_GWV.Web.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult AmazonLogin (string returnUrl)
+        {
+            var model = new AmazonLoginViewModel();
+            model.State = Request.QueryString["state"];
+            model.Redirect_Uri = Request.QueryString["redirect_uri"];
+            model.ClientId = Request.QueryString["client_id"];
+            //model.VendorId = Request.QueryString["vendorId"];
+
+            if (model.State == null || model.Redirect_Uri == null || model.ClientId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
+
+        //
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AmazonLogin(AmazonLoginViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            
+
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return await RedirectAmazonAuthorization(model);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+        }
+
+        private async Task<ActionResult> RedirectAmazonAuthorization(AmazonLoginViewModel model)
+        {
+            string accessToken;
+            string tokenType;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
+
+                // HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/token");
+                //var reqContent = $"{{\"grant_type\":\"password\",\"username\":\"{model.Email}\",\"password\":\"{model.Password}\"}}";
+                var Content = new FormUrlEncodedContent(new[]
+                {
+                     new KeyValuePair<string, string>("grant_type", "password"),
+                     new KeyValuePair<string, string>("username",model.Email),
+                      new KeyValuePair<string, string>("password",model.Password),
+                });
+
+                var response = await client.PostAsync("/token", Content);
+                string resultContent = await response.Content.ReadAsStringAsync();
+                var data = JObject.Parse(resultContent);
+                accessToken = data.GetValue("access_token").ToString();
+                tokenType = data.GetValue("token_type").ToString();
+            }
+
+            string url = $"{model.Redirect_Uri}#state={model.State}&access_token={accessToken}&token_type={tokenType}";
+            return Redirect(url);
         }
 
         //
@@ -121,6 +201,9 @@ namespace Alexa_GWV.Web.Controllers
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            
+
+           
             switch (result)
             {
                 case SignInStatus.Success:

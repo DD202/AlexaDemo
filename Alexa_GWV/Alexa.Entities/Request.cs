@@ -54,6 +54,9 @@ namespace Alexa.Entities
         private List<KeyValuePair<string, string>> slotsList = new List<KeyValuePair<string, string>>();
 
         [NotMapped]
+        public string AccessToken { get; set; }
+
+        [NotMapped]
         public List<KeyValuePair<string, string>> SlotsList
         {
             get

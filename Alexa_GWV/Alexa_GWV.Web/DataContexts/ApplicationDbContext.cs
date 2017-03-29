@@ -24,6 +24,10 @@ namespace Alexa_GWV.Web.Models
 
         public DbSet<Request> Requests { get; set; }
 
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<UserPreference> UserPreferences { get; set; }
+
+        public DbSet<InformationalFact> InformationalFacts { get; set; }
+
+        public DbSet<Picture> Pictures { get; set; }
     }
 }

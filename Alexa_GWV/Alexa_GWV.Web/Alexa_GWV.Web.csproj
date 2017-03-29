@@ -49,15 +49,35 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin.Cors, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.2.0.2\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -178,10 +198,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AlexaPsController.cs" />
-    <Compile Include="Controllers\AlexaSimpleController.cs" />
+    <Compile Include="Controllers\AlexaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserPreferencesController.cs" />
     <Compile Include="DataContexts\ApplicationDbContext.cs" />
     <Compile Include="DataContexts\Requests.cs" />
     <Compile Include="Global.asax.cs">
@@ -199,11 +219,28 @@
     <Compile Include="Migrations\201703211432483_PS_Entities.Designer.cs">
       <DependentUpon>201703211432483_PS_Entities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703281523071_UserPreferences.cs" />
+    <Compile Include="Migrations\201703281523071_UserPreferences.Designer.cs">
+      <DependentUpon>201703281523071_UserPreferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703281925593_UpdateModels.cs" />
+    <Compile Include="Migrations\201703281925593_UpdateModels.Designer.cs">
+      <DependentUpon>201703281925593_UpdateModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703282143182_SkillsFramework.cs" />
+    <Compile Include="Migrations\201703282143182_SkillsFramework.Designer.cs">
+      <DependentUpon>201703282143182_SkillsFramework.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290008074_UpdatingFrameworkModel.cs" />
+    <Compile Include="Migrations\201703290008074_UpdatingFrameworkModel.Designer.cs">
+      <DependentUpon>201703290008074_UpdatingFrameworkModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Providers\BodyContentOAuthBearerProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +264,10 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="SpeechAssets\AlexaPs\SampleUtterances.txt" />
-    <Content Include="SpeechAssets\AlexaSimple\SampleUtterances.txt" />
-    <Content Include="Web.config" />
+    <Content Include="SpeechAssets\SampleUtterances.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -264,8 +302,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="SpeechAssets\AlexaSimple\IntentSchema.json" />
-    <Content Include="SpeechAssets\AlexaPs\IntentSchema.json" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Account\AmazonLogin.cshtml" />
+    <Content Include="Views\UserPreferences\Create.cshtml" />
+    <Content Include="Views\UserPreferences\Delete.cshtml" />
+    <Content Include="Views\UserPreferences\Details.cshtml" />
+    <Content Include="Views\UserPreferences\Edit.cshtml" />
+    <Content Include="Views\UserPreferences\Index.cshtml" />
+    <Content Include="SpeechAssets\IntentSchema.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,6 +336,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703211432483_PS_Entities.resx">
       <DependentUpon>201703211432483_PS_Entities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703281523071_UserPreferences.resx">
+      <DependentUpon>201703281523071_UserPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703281925593_UpdateModels.resx">
+      <DependentUpon>201703281925593_UpdateModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703282143182_SkillsFramework.resx">
+      <DependentUpon>201703282143182_SkillsFramework.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290008074_UpdatingFrameworkModel.resx">
+      <DependentUpon>201703290008074_UpdatingFrameworkModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
