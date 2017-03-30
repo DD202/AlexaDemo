@@ -104,6 +104,10 @@ namespace Alexa.Entities
                 }
             }
 
+            public const string CARD_TYPE_SIMPLE = "Simple";
+            public const string CARD_TYPE_STANDARD = "Standard";
+            public const string CARD_TYPE_LINK_ACCOUNT = "LinkAccount";
+
             [JsonObject("card")]
             public class CardAttributes
             {
@@ -116,10 +120,29 @@ namespace Alexa.Entities
                 [JsonProperty("content")]
                 public string Content { get; set; }
 
+                [JsonProperty("text")]
+                public string Text { get; set; }
+
+                [JsonProperty("image")]
+                public ImageAttributes image { get; set; }
+
+
                 public CardAttributes()
                 {
                     Type = "Simple";
+                    image = new ImageAttributes();
+
                 }
+            }
+
+            [JsonObject("image")]
+            public class ImageAttributes
+            {
+                [JsonProperty("smallImageUrl")]
+                public string SmallImageUrl { get; set; }
+
+                [JsonProperty("largeImageUrl")]
+                public string LargeImageUrl { get; set; }
             }
 
             [JsonObject("reprompt")]

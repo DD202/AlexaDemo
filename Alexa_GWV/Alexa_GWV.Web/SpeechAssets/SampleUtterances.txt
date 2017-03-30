@@ -1,17 +1,20 @@
 ﻿RandomFactIntent tell me something
-RandomFactIntent tell me something funny
 RandomFactIntent tell me a fact
+RandomFactIntent tell me a random fact
+RandomFactIntent random fact
 
 PersonalInfoIntent tell me something about myself
 PersonalInfoIntent tell me my info
+PersonalInfoIntent tell me something personal
+PersonalInfoIntent pesonal information
+PersonalInfoIntent personal
 
 RandomImageIntent send me a random picture
 RandomImageIntent send me a random image
 RandomImageIntent random picture
 RandomImageIntent random image
 RandomImageIntent picture
-RandomImageIntent image 
- 
+RandomImageIntent image
 
 AMAZON.CancelIntent stop doing that
 AMAZON.StopIntent stop 

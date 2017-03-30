@@ -41,9 +41,9 @@ namespace Alexa_GWV.Web.Controllers
         private async Task<AlexaResponse> LaunchRequestHandler(Request requestMessage)
         {
             var response = new AlexaResponse();
-            response.Response.OutputSpeech.Text = "Welcome to the dotnet Alexa Skils Framework. You can use the followng options";
+            response.Response.OutputSpeech.Text = "Welcome to the dotnet Alexa Skils Framework. You can ask me to tell you a random fact, send you a random picture, or tell you something personal.";
             response.Response.Card.Title = "Welcome to the .Net Alexa Skils Framework";
-            response.Response.Card.Content = "You can ask me the following...";
+            response.Response.Card.Content = "You can ask me to tell you a random fact, send you a random picture, or tell you something personal.";
             response.Response.ShouldEndSession = false;
 
             return response;
@@ -86,8 +86,8 @@ namespace Alexa_GWV.Web.Controllers
             var response = new AlexaResponse();
             response.Response.OutputSpeech.Text = $"Did you know that {randomFact}";
             response.Response.Card.Title = ".Net Alexa Skills Framework - Random Fact";
-            response.Response.Card.Content = randomFact;
-            response.Response.ShouldEndSession = false;
+            response.Response.Card.Content = $"Did you know that {randomFact}";
+            response.Response.ShouldEndSession = true;
 
             return response;
         }
@@ -100,9 +100,16 @@ namespace Alexa_GWV.Web.Controllers
                 randomPicture = db.Pictures.OrderBy(x => Guid.NewGuid()).First();
             }
 
-            //The response object needs to be modified to handle 'image' cards to implement this
+            var response = new AlexaResponse();
+            response.Response.OutputSpeech.Text = $"{randomPicture.Description} - picture shown, check your alexa app";
+            response.Response.Card.Title = ".Net Alexa Skills Framework - Random Picture";
+            response.Response.Card.Text = $"{randomPicture.Description}";
+            response.Response.Card.image.SmallImageUrl = randomPicture.SmallImageUrl;
+            response.Response.Card.image.LargeImageUrl = randomPicture.LargeImageUrl;
+            response.Response.Card.Type = AlexaResponse.ResponseAttributes.CARD_TYPE_STANDARD;
+            response.Response.ShouldEndSession = true;
 
-            throw new NotImplementedException();
+            return response;
         }
 
         private async Task<AlexaResponse> PersonalInfoIntent(Request requestMessage)
@@ -122,9 +129,8 @@ namespace Alexa_GWV.Web.Controllers
             else
             {
                 //Add account 'linking card' to display properly
-                response.Response.OutputSpeech.Text = "You must have a linked account to access this functionality";
-                response.Response.Card.Title = ".Net Skills Framework";
-                response.Response.Card.Content = "Come back soon!";
+                response.Response.OutputSpeech.Text = "You must have a linked account to access this functionality. Please visit the app to complete the account setup process.";
+                response.Response.Card.Type = AlexaResponse.ResponseAttributes.CARD_TYPE_LINK_ACCOUNT;
                 response.Response.ShouldEndSession = true;
 
             }

@@ -115,6 +115,17 @@ namespace Alexa_GWV.Web.Migrations
                     Fact = "When you die your hair still grows for a couple of months.",
                     Votes = 0
                 });
+
+            context.Pictures.AddOrUpdate(
+                    c => c.Id,
+                    new Alexa.Entities.Picture
+                    {
+                        Id = 1,
+                        Description = "Party Shark",
+                        LargeImageUrl = "https://alexa-gwv-test.azurewebsites.net/Images/rand1.jpeg",
+                        SmallImageUrl = "https://alexa-gwv-test.azurewebsites.net/Images/rand1.jpeg"
+                    }
+                );
             
 
         }
