@@ -122,11 +122,22 @@ namespace Alexa_GWV.Web.Migrations
                     {
                         Id = 1,
                         Description = "Party Shark",
-                        LargeImageUrl = "https://alexa-gwv-test.azurewebsites.net/Images/rand1.jpeg",
-                        SmallImageUrl = "https://alexa-gwv-test.azurewebsites.net/Images/rand1.jpeg"
+                        LargeImageUrl = "https://alexa-gwv.azurewebsites.net/Images/rand1.jpeg",
+                        SmallImageUrl = "https://alexa-gwv.azurewebsites.net/Images/rand1.jpeg"
                     }
                 );
-            
+
+            context.Pictures.AddOrUpdate(
+                    c => c.Id,
+                    new Alexa.Entities.Picture
+                    {
+                        Id = 2,
+                        Description = "roaring dinosaur",
+                        LargeImageUrl = "https://alexa-gwv.azurewebsites.net/Images/rawr.jpeg",
+                        SmallImageUrl = "https://alexa-gwv.azurewebsites.net/Images/rawr.jpeg"
+                    }
+                );
+
 
         }
     }
